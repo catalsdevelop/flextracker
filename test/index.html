@@ -1,0 +1,37 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="./mocha.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <script src="./jquery-2.2.1.js"></script>
+  <script src="./mocha.js"></script>
+  <script src="./should.min.js"></script>
+  <script src="./sinon-1.17.3.js"></script>
+
+  <script>mocha.setup('bdd')</script>
+<!--   <script src="test.array.js"></script>
+  <script src="test.object.js"></script>--> 
+  <script src="./unit/test-all.js"></script>
+  <script>
+        // window.onerror = function(){
+        //     console.log(arguments);
+        // };
+
+        // it('test', function(done){
+        //     var spy = sinon.spy(window.onerror);
+        //     $.getScript('http://static1.catals.com/s1.js').done(function(){
+        //         done();
+        //     });
+        // });
+  </script>
+  <script>
+    // mocha.checkLeaks();
+    mocha.globals(['jQuery']);
+    mocha.run();
+  </script>
+</body>
+</html>

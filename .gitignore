@@ -1,0 +1,4 @@
+ftp.sh
+upload.bat
+/bundle.*
+!.gitignore

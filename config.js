@@ -27,6 +27,7 @@ var defaults = {
     action:true,//是否监控并发送用户操作信息
     hook:true,//是否增加hook，把setTimeout/setInterval/requestAnimationFrame和add/removeEventListener给wrap一层
     net:true,//是否hook ajax请求
+    dependence:true,//是否发送页面上依赖类的版本信息
     ignoreErrors:[],
     ignoreUris:[]
 }

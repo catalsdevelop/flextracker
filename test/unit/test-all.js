@@ -137,7 +137,7 @@ action.prototype = {
 };
 
 module.exports = action;
-},{"./util":15}],2:[function(require,module,exports){
+},{"./util":16}],2:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -167,6 +167,7 @@ var defaults = {
     action:true,//是否监控并发送用户操作信息
     hook:true,//是否增加hook，把setTimeout/setInterval/requestAnimationFrame和add/removeEventListener给wrap一层
     net:true,//是否hook ajax请求
+    dependence:true,//是否发送页面上依赖类的版本信息
     ignoreErrors:[],
     ignoreUris:[]
 }
@@ -221,7 +222,56 @@ output.defaults = defaults;
 output.settings = settings;
 
 module.exports = output;
-},{"./util.js":15}],3:[function(require,module,exports){
+},{"./util.js":16}],3:[function(require,module,exports){
+/**
+ * 
+ * @authors liuzhen7 (liuzhen7@jd.com)
+ * @date    2016-03-27 15:32:28
+ * @description 增加依赖检测
+ *
+ */
+
+var util = require('./util');
+
+function popLibVersion(){
+    var arr = [],v;
+    var kvp = [
+        ['jQuery','jQuery.fn.jquery'],
+        ['jQuery ui', 'jQuery.ui.version'],
+        ['lodash(underscore)', '_.VERSION'],
+        ['Backbone','Backbone.VERSION'],
+        ['knockout', 'ko.version'],
+        ['Angular', 'angular.version.full'],
+        ['React','React.version'],
+        ['Vue','Vue.version']
+    ];
+    for(var i =0; i< kvp.length;++i){
+        var version = util.globalObjValue(kvp[i][1]);
+        if(version != null){
+            arr.push([kvp[i][0], version]);
+        }
+    }
+    return arr;
+}
+
+module.exports = {
+    all:function(){
+        var result = [];
+        var filter = 'jQuery _ Backbone ko angular React Vue';
+        for(var p in window){
+            if(filter.indexOf(p) === -1){
+                var item = window[p];
+                var version = item && (item.version || item.Version || item.VERSION);
+                if(version){
+                    result.push([p, version]);
+                }
+            }
+        }
+        return result.concat(popLibVersion());
+    }
+}
+
+},{"./util":16}],4:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -295,7 +345,7 @@ function object2Query(obj){
 }
 
 module.exports = dispatcher;
-},{"./util":15}],4:[function(require,module,exports){
+},{"./util":16}],5:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -317,7 +367,7 @@ var environment = {
 }
 
 module.exports = environment;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
             /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -430,7 +480,7 @@ var store = {
 }
 
 module.exports = store;
-},{"./config":2,"./util":15}],6:[function(require,module,exports){
+},{"./config":2,"./util":16}],7:[function(require,module,exports){
 var utilTest = require('./utilTest');
 var configTest = require('./configTest');
 var userdata = require('./userdataTest');
@@ -438,7 +488,7 @@ var storeTest = require('./storeTest');
 var dispatcherTest = require('./dispatcherTest');
 var trackerTest = require('./trackerTest');
 // var windowTest = require('./windowTest');
-},{"./configTest":7,"./dispatcherTest":8,"./storeTest":9,"./trackerTest":10,"./userdataTest":11,"./utilTest":12}],7:[function(require,module,exports){
+},{"./configTest":8,"./dispatcherTest":9,"./storeTest":10,"./trackerTest":11,"./userdataTest":12,"./utilTest":13}],8:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -458,6 +508,7 @@ describe('config module test', function(){
                 action:true,
                 hook:true,
                 net:true,
+                dependence:true,
                 ignoreErrors:[],
                 ignoreUris:[]
             });
@@ -493,6 +544,7 @@ describe('config module test', function(){
                 action:true,
                 hook:false,
                 net:true,
+                dependence:true,
                 ignoreErrors:[],
                 ignoreUris:[]
             });
@@ -514,6 +566,7 @@ describe('config module test', function(){
                 action:true,
                 hook:true,
                 net:false,
+                dependence:true,
                 ignoreErrors:[],
                 ignoreUris:[]
             });
@@ -539,6 +592,7 @@ describe('config module test', function(){
                 action:true,
                 hook:true,
                 net:false,
+                dependence:true,
                 ignoreErrors:[
                     EvalError,
                     'localhost:8000'
@@ -548,7 +602,7 @@ describe('config module test', function(){
         });
     })
 });
-},{"../../config":2}],8:[function(require,module,exports){
+},{"../../config":2}],9:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -600,7 +654,7 @@ describe('dispatcher module test', function(){
         });
     });
 });
-},{"../../config":2,"../../dispatcher":3}],9:[function(require,module,exports){
+},{"../../config":2,"../../dispatcher":4}],10:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -788,7 +842,7 @@ describe('store module test', function(){
         });
     });
 })
-},{"../../store":5}],10:[function(require,module,exports){
+},{"../../store":6}],11:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -979,7 +1033,7 @@ describe('tracker module test', function(){
 
 });
 
-},{"../../action":1,"../../config":2,"../../dispatcher":3,"../../store":5,"../../tracker":13,"../../userdata":14}],11:[function(require,module,exports){
+},{"../../action":1,"../../config":2,"../../dispatcher":4,"../../store":6,"../../tracker":14,"../../userdata":15}],12:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -1045,7 +1099,7 @@ describe('userdata module test', function(){
         });
     });
 });
-},{"../../userdata":14}],12:[function(require,module,exports){
+},{"../../userdata":15}],13:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -1359,9 +1413,18 @@ describe('util module test',function(){
         });
     });
 
+    describe('.globalObjValue()', function(){
+        it('返回一个全局对象的值，如果不存在返回null',function(){
+            var v1 = util.ns('a.b.c.d');
+            a.b.c.d.e = 1;
+            util.globalObjValue('a.b.c.d.e').should.eql(1);
+            should(util.globalObjValue('h.i.j.k')).be.exactly(null);
+        })
+    })
+
     describe.skip('.isOldIE() .isIE67() .cw() .guid() .addEvent() .removeEvent() .indexOf()', function(){});
 });
-},{"../../util":15}],13:[function(require,module,exports){
+},{"../../util":16}],14:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -1372,6 +1435,7 @@ describe('util module test',function(){
 
 var util = require('./util');
 var env = require('./environment');
+var dependenceMointer = require('./dependence');
 
 /**
  * 根据堆栈的长度，截断多余的堆栈信息
@@ -1402,6 +1466,7 @@ function getErrorKey(error){
  * @param  {Object} cfg        配置信息
  * @param  {Object} store      存储库
  * @param  {Object} dispatcher 发送器
+ * @param  {Object} userdata 自定义数据
  * @param  {Object} actionMonitor 行为捕捉器
  */
 var tracker = function(cfg, store, dispatcher, userdata, actionMonitor){
@@ -1471,8 +1536,10 @@ tracker.prototype = {
         if(cfg.action){
             util.extend(info,{operation:this.action.all()})
         }
+        if(cfg.dependence){
+            util.extend(info,{dependence:dependenceMointer.all()})
+        }
         this.store.clear();
-        // console.dir(this.dispatcher);
         this.dispatcher.sendError(info);
         this.lastError = {
             key:key,
@@ -1481,7 +1548,7 @@ tracker.prototype = {
     }
 }
 module.exports = tracker;
-},{"./environment":4,"./util":15}],14:[function(require,module,exports){
+},{"./dependence":3,"./environment":5,"./util":16}],15:[function(require,module,exports){
 /**
  * 
  * @authors liuzhen7 (liuzhen7@jd.com)
@@ -1547,7 +1614,7 @@ userdata.prototype = {
     }
 }
 module.exports = userdata;
-},{"./util":15}],15:[function(require,module,exports){
+},{"./util":16}],16:[function(require,module,exports){
 //基本的辅助函数
 var obj={},
     types =["Array", "Boolean", "Date", "Number", "Object", "RegExp", "String", "Error", "Window", "HTMLDocument"];
@@ -1703,6 +1770,21 @@ function ns(namespace){
     }
     return window[namespace] = {};
 }
+
+/**
+ * 返回全局的对象值，有值的话返回。
+ * @param  {[type]} namespace 名字空间
+ * @return {[type]}           
+ */
+function globalObjValue(namespace){
+    try{
+        return eval(namespace);
+    }
+    catch(e){
+        return null;
+    }
+}
+
 function addEvent(element, type, listener, capture){
     if(windwo.addEventListener){
         element.addEventListener(type, listener, capture || false);
@@ -1781,8 +1863,9 @@ var output = extend(obj,{
     addEvent:addEvent,
     removeEvent:removeEvent,
     indexOf:indexOf,
-    isoDate:getISODateNow
+    isoDate:getISODateNow,
+    globalObjValue:globalObjValue
 });
 
 module.exports = output;
-},{}]},{},[6]);
+},{}]},{},[7]);

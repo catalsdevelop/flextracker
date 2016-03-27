@@ -153,6 +153,21 @@ function ns(namespace){
     }
     return window[namespace] = {};
 }
+
+/**
+ * 返回全局的对象值，有值的话返回。
+ * @param  {[type]} namespace 名字空间
+ * @return {[type]}           
+ */
+function globalObjValue(namespace){
+    try{
+        return eval(namespace);
+    }
+    catch(e){
+        return null;
+    }
+}
+
 function addEvent(element, type, listener, capture){
     if(windwo.addEventListener){
         element.addEventListener(type, listener, capture || false);
@@ -231,7 +246,8 @@ var output = extend(obj,{
     addEvent:addEvent,
     removeEvent:removeEvent,
     indexOf:indexOf,
-    isoDate:getISODateNow
+    isoDate:getISODateNow,
+    globalObjValue:globalObjValue
 });
 
 module.exports = output;

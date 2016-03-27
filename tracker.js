@@ -8,6 +8,7 @@
 
 var util = require('./util');
 var env = require('./environment');
+var dependenceMointer = require('./dependence');
 
 /**
  * 根据堆栈的长度，截断多余的堆栈信息
@@ -38,6 +39,7 @@ function getErrorKey(error){
  * @param  {Object} cfg        配置信息
  * @param  {Object} store      存储库
  * @param  {Object} dispatcher 发送器
+ * @param  {Object} userdata 自定义数据
  * @param  {Object} actionMonitor 行为捕捉器
  */
 var tracker = function(cfg, store, dispatcher, userdata, actionMonitor){
@@ -107,8 +109,10 @@ tracker.prototype = {
         if(cfg.action){
             util.extend(info,{operation:this.action.all()})
         }
+        if(cfg.dependence){
+            util.extend(info,{dependence:dependenceMointer.all()})
+        }
         this.store.clear();
-        // console.dir(this.dispatcher);
         this.dispatcher.sendError(info);
         this.lastError = {
             key:key,

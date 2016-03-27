@@ -311,5 +311,14 @@ describe('util module test',function(){
         });
     });
 
+    describe('.globalObjValue()', function(){
+        it('返回一个全局对象的值，如果不存在返回null',function(){
+            var v1 = util.ns('a.b.c.d');
+            a.b.c.d.e = 1;
+            util.globalObjValue('a.b.c.d.e').should.eql(1);
+            should(util.globalObjValue('h.i.j.k')).be.exactly(null);
+        })
+    })
+
     describe.skip('.isOldIE() .isIE67() .cw() .guid() .addEvent() .removeEvent() .indexOf()', function(){});
 });

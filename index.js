@@ -94,5 +94,6 @@ innerTracker.prototype = {
     }
 }
 
-util.ns('eagleeye.tracker');
-eagleeye.tracker = main;
+util.ns('EagleeyeTracker');
+EagleeyeTracker = main;
+EagleeyeTracker.version = config.settings.version;

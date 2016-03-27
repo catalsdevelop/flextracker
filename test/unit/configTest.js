@@ -17,6 +17,7 @@ describe('config module test', function(){
                 action:true,
                 hook:true,
                 net:true,
+                dependence:true,
                 ignoreErrors:[],
                 ignoreUris:[]
             });
@@ -52,6 +53,7 @@ describe('config module test', function(){
                 action:true,
                 hook:false,
                 net:true,
+                dependence:true,
                 ignoreErrors:[],
                 ignoreUris:[]
             });
@@ -73,6 +75,7 @@ describe('config module test', function(){
                 action:true,
                 hook:true,
                 net:false,
+                dependence:true,
                 ignoreErrors:[],
                 ignoreUris:[]
             });
@@ -98,6 +101,7 @@ describe('config module test', function(){
                 action:true,
                 hook:true,
                 net:false,
+                dependence:true,
                 ignoreErrors:[
                     EvalError,
                     'localhost:8000'

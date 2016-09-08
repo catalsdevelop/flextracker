@@ -1,0 +1,6 @@
+test/*.js
+node_modules
+*.sh
+.eslintrc.js
+dict
+json.js

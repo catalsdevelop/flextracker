@@ -1,17 +1,15 @@
 /**
- * 
- * @authors liuzhen7 (liuzhen7@jd.com)
- * @date    2016-03-10 14:54:58
- * @description 公共存储功能模块测试 
+ *
+ * @description 公共存储功能模块测试
  *
  */
-var store = require('../../store');
+var store = require('../../src/store');
 
 describe('store module test', function(){
     var old;
     beforeEach(function(){
         old = Math.random;
-    });        
+    });
 
     afterEach(function(){
         Math.random = old;
@@ -27,7 +25,7 @@ describe('store module test', function(){
                 var id = store.add({action:'input', element:{type:'text', autocomplete:true}, tag:'input',length:24}, 'a');
                 id.should.eql('1f9a1f9a-1f9a-1f9a-1f9a-1f9a1f9a1f9a');
             }
-            
+
             Math.random = function(){
                 return .7654321;//c3f3c3f3-c3f3-c3f3-c3f3-c3f3c3f3c3f3
             }
@@ -35,7 +33,7 @@ describe('store module test', function(){
                 var id = store.add({action:'click', element:{type:'checkbox', checked:true}, tag:'input'}, 'a');
                 id.should.eql('c3f3c3f3-c3f3-c3f3-c3f3-c3f3c3f3c3f3');
             }
-            
+
             Math.random = function(){
                 return .13579;//22c322c3-22c3-22c3-22c3-22c322c322c3
             }
@@ -92,7 +90,7 @@ describe('store module test', function(){
             result2.should.be.true();
             store.all().length.should.eql(3);
             store.all('a2').length.should.eql(2);
-            
+
             var result3 = store.remove(id4);
             result3.should.be.true();
             var all = store.all();
@@ -146,7 +144,7 @@ describe('store module test', function(){
             for(var i = 0; i < 10; ++i){
                 store.add({action:'input', element:{type:'text', autocomplete:true}, tag:'input',length:24}, 'a1');
             }
-            
+
             Math.random = function(){
                 return .7654321;//c3f3c3f3-c3f3-c3f3-c3f3-c3f3c3f3c3f3
             }
@@ -176,7 +174,7 @@ describe('store module test', function(){
 
             var all = store.all();
             all.length.should.eql(20);
-            
+
         });
 
         it('如果指定类型没有数据，返回空数组', function(){

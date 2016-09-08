@@ -1,12 +1,10 @@
 /**
- * 
- * @authors liuzhen7 (liuzhen7@jd.com)
- * @date    2016-03-11 16:22:46
+ *
  * @description userdata测试模块
  *
  */
 
-var ud = require('../../userdata');
+var ud = require('../../src/userdata');
 var userdata = new ud();
 
 describe('userdata module test', function(){
@@ -26,7 +24,7 @@ describe('userdata module test', function(){
 
     describe('.get() and .set()', function(){
         it('设置和获取用户自定义信息', function(){
-            
+
             userdata.set('extra',{p1:2,p2:3,p3:4});
 
             var v1 = userdata.get('age');

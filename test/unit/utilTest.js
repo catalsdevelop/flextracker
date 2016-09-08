@@ -1,11 +1,9 @@
 /**
- * 
- * @authors liuzhen7 (liuzhen7@jd.com)
- * @date    2016-03-09 13:38:13
- * @description util模块，有一些函数没有办法测试，isoDate\guid 
+ *
+ * @description util模块，有一些函数没有办法测试，isoDate\guid
  *
  */
-var util = require('../../util');
+var util = require('../../src/util');
 
 describe('util module test',function(){
     describe('object real type judgement', function(){
@@ -152,26 +150,6 @@ describe('util module test',function(){
         });
     })
 
-    describe('.extend()', function(){
-        it('扩展对象', function(){
-            var des = {a:1,b:2};
-            var result = util.extend(des, {b:'b',c:3});
-            des.should.equal(result);
-            des.should.eql({a:1, b:'b', c:3});
-        });
-
-        it('如果要扩展的source对象不是简单对象，则直接返回destination对象', function(){
-            var des = {name:'liuzhen7',age:30};
-            var result1 = util.extend(des, 112233);
-            result1.should.eql({name:'liuzhen7',age:30});
-            des.should.equal(result1);
-
-            var result2 = util.extend(des, new Date);
-            result2.should.eql({name:'liuzhen7',age:30});
-            des.should.equal(result2);
-        });
-    });
-
     describe('.bind()', function(){
         it('简单bind this', function(){
             var getName = function(){
@@ -224,79 +202,9 @@ describe('util module test',function(){
         });
     });
 
-    describe('.ns()', function(){
-        var ns = util.ns;
-
-        function f0(){
-            ns('123');
-            return window['123'];
-        }
-
-        function f1(){
-            ns('1a.2b');//n
-            var initNS = window['1a']['2b'];
-        }
-
-        function f2(){
-            ns('&ns1.ns2');//n
-            var initNS = window['&ns1']['ns2'];
-        }
-
-        function f3(){
-            ns('ns1.123');//n
-            var initNS = window['ns1']['123'];
-        }
-
-        function f4(){
-            ns('ns1.%ns2');//n
-            var initNS = window['ns1']['%ns2'];
-        }
-
-        afterEach(function(){
-            delete window['ns1'];
-            delete window['_123'];
-        })
-
-        it('对于不符合命名规范的字符串，不能初始化对应的命名空间', function(){
-            (f0()===undefined).should.be.true();
-            f1.should.throw();
-            f2.should.throw();
-            f3.should.throw();
-            f4.should.throw();
-        });
-
-        it('正确初始化一个命名空间', function(){
-            ns('myns');//y
-            window['myns'].should.eql({});
-
-            ns('ns1.ns2');//y
-            window['ns1'].should.eql({'ns2':{}});
-            window['ns1']['ns2'].should.eql({});
-
-            ns('ns1.Ns2');//y
-            window['ns1']['ns2'].should.eql({});//won't be override
-            window['ns1']['Ns2'].should.eql({});
-            
-            ns('ns1._123');//y
-            window['ns1']['ns2'].should.eql({});//won't be override
-            window['ns1']['Ns2'].should.eql({});
-            window['ns1']['_123'].should.eql({});
-
-            ns('ns1.ns2.ns3');//y
-            window['ns1']['ns2']['ns3'].should.eql({});
-
-            ns('_123._456');//y
-            window['_123'].should.eql({'_456':{}});
-            window['_123']['_456'].should.eql({});
-            ns('_123.ns2');//y
-            window['_123']['_456'].should.eql({});
-            window['_123']['ns2'].should.eql({});
-        });
-    });
-
     describe('.isoDate()', function(){
         var clock;
-        
+
         beforeEach(function(){
             clock = sinon.useFakeTimers();
         });
@@ -311,14 +219,5 @@ describe('util module test',function(){
         });
     });
 
-    describe('.globalObjValue()', function(){
-        it('返回一个全局对象的值，如果不存在返回null',function(){
-            var v1 = util.ns('a.b.c.d');
-            a.b.c.d.e = 1;
-            util.globalObjValue('a.b.c.d.e').should.eql(1);
-            should(util.globalObjValue('h.i.j.k')).be.exactly(null);
-        })
-    })
-
-    describe.skip('.isOldIE() .isIE67() .cw() .guid() .addEvent() .removeEvent() .indexOf()', function(){});
+    describe.skip('.isOldIE() .isIE67() .cw() .guid() .addEvent() .removeEvent() .indexOf() .globalObjValue()', function(){});
 });

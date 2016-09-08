@@ -1,0 +1,50 @@
+{
+  "name": "tracker_client",
+  "version": "0.2.0",
+  "description": "a flexble client error and action track script",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test",
+    "src": "src"
+  },
+  "scripts": {
+    "lint": "eslint src ./src/*.js",
+    "dev": "cross-env NODE_ENV=development webpack --progress -d",
+    "dev-watch": "cross-env NODE_ENV=development webpack --progress -d --watch",
+    "build": "cross-env NODE_ENV=production webpack --progress -p",
+    "unit": "cross-env NODE_ENV=test karma start test/karma.conf.js --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.jd.com:liuzhen154/tracker_client.git"
+  },
+  "keywords": [
+    "client",
+    "track"
+  ],
+  "author": "catalsdevelop@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^2.0.1",
+    "eslint": "^3.4.0",
+    "isparta-loader": "^2.0.0",
+    "karma": "^0.13.22",
+    "karma-coverage": "^0.5.5",
+    "karma-mocha": "^0.2.2",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-should": "^1.0.0",
+    "karma-sinon": "^1.0.5",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.26",
+    "karma-webpack": "^1.8.0",
+    "mocha": "^3.0.2",
+    "should": "^11.1.0",
+    "sinon": "^1.17.5",
+    "webpack": "^1.13.2",
+    "webpack-merge": "^0.14.1"
+  },
+  "dependencies": {
+    "json-js": "^1.1.2",
+    "lz-string": "^1.4.4"
+  }
+}

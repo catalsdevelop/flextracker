@@ -1,17 +1,15 @@
 /**
- * 
- * @authors liuzhen7 (liuzhen7@jd.com)
- * @date    2016-03-14 17:20:44
+ *
  * @description window模块测试
  *
  */
-var config = require('../../config');
-var store = require('../../store');
-var Dispatcher = require('../../dispatcher');
-var Tracker = require('../../tracker');
+var config = require('../../src/config');
+var store = require('../../src/store');
+var Dispatcher = require('../../src/dispatcher');
+var Tracker = require('../../src/tracker');
 
 var tracker = new Tracker(config, store, new Dispatcher(config));
-var win = require('../../window');
+var win = require('../../src/window');
 
 
 describe.skip('window module test', function(){

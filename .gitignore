@@ -1,4 +1,9 @@
 ftp.sh
 upload.bat
 /bundle.*
+.idea
 !.gitignore
+/dist
+/test/coverage
+node_modules
+.idea

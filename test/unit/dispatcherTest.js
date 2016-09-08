@@ -1,20 +1,18 @@
 /**
- * 
- * @authors liuzhen7 (liuzhen7@jd.com)
- * @date    2016-03-13 17:33:43
+ *
  * @description dispatcher模块测试
  *
  */
-var config = require('../../config');
+var config = require('../../src/config');
 config.token  = 'token-123-456-789';
 
-var disp = require('../../dispatcher');
+var disp = require('../../src/dispatcher');
 var dispatcher = new disp(config);
 
 describe('dispatcher module test', function(){
     describe('.endPoint()', function(){
         it('返回正常的远程接口http/https地址', function(){
-            dispatcher.endPoint().should.eql('http://nodejs.catals.com/catch?token=token-123-456-789&');
+            dispatcher.endPoint().should.eql('http://www.example.com/catch?token=token-123-456-789&');
         });
     });
 

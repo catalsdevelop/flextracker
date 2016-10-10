@@ -30,12 +30,20 @@ dispatcher.prototype = {
   },
   sendError: function(info) {
     var endPoint = this.endPoint(this.config.token)
-    var xhr = getXHR(endPoint)
-    if (util.isString(info)) {
-      xhr.send(info)
+    if (!util.isString(info)) {
+      info = JSON.stringify(info)
+    }
+    if (navigator.sendBeacon) {
+      /*
+      * https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
+      * This method addresses the needs of analytics and diagnostics code that typically attempts to send data to a web server prior to the unloading of the document.
+      * user agents typically ignore asynchronous XMLHttpRequests made in an unload handler
+      */
+      navigator.sendBeacon(endPoint, info);
     }
     else {
-      xhr.send(JSON.stringify(info))
+      var xhr = getXHR(endPoint)
+      xhr.send(info)
     }
   }
 }

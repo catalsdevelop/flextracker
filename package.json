@@ -1,6 +1,6 @@
 {
   "name": "tracker_client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "a flexble client error and action track script",
   "main": "src/index.js",
   "directories": {
